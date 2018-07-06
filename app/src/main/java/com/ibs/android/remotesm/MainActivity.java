@@ -59,10 +59,14 @@ public class MainActivity extends AppCompatActivity {
                                 for(int j=0;j<jsonArray1.length();j++) {
                                     //String label=widget.getString("icon");
                                     String label=jsonArray1.getJSONObject(j).getString("label");
+
+                                    //JSONObject obj=jsonArray1.getJSONObject(j).getJSONObject("linkedPage");
+                                    //String link=jsonArray1.getJSONObject(j).getJSONObject("linkedPage").getString("link");
+                                    String link="manh";
                                     //String label = "test";
-                                   // String icon = widget.getString("https://demo.openhab.org:8443/icon/firstfloor?state=null&format=PNG");
+                                    // String icon = widget.getString("https://demo.openhab.org:8443/icon/firstfloor?state=null&format=PNG");
                                     String icon = "https://demo.openhab.org:8443/icon/firstfloor?state=null&format=PNG";
-                                    itemList.add(new Item(label, icon));
+                                    itemList.add(new Item(label, icon,link));
                                 }
                             }
 

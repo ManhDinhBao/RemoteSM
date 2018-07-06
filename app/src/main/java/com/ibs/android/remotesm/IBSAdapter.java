@@ -34,8 +34,10 @@ public class IBSAdapter extends RecyclerView.Adapter<IBSAdapter.IBSViewHolder> {
 
         String label=item.getLabel();
         String icon=item.getIcon();
+        String link=item.getLink();
 
         holder.mTextView.setText(label);
+        holder.mTextViewLink.setText(link);
         //Picasso.with(mContext).load(icon).fit().centerInside().into(holder.mImageView);
         Picasso.with(mContext).load(icon).into(holder.mImageView);
     }
@@ -49,11 +51,13 @@ public class IBSAdapter extends RecyclerView.Adapter<IBSAdapter.IBSViewHolder> {
     {
         public ImageView mImageView;
         public TextView mTextView;
+        public TextView mTextViewLink;
 
         public IBSViewHolder(View itemView) {
             super(itemView);
             mImageView=itemView.findViewById(R.id.imgIcon);
             mTextView=itemView.findViewById(R.id.tvLabel);
+            mTextViewLink=itemView.findViewById(R.id.tvLink);
         }
     }
 

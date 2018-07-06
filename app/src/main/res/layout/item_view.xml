@@ -24,11 +24,17 @@
 
             <TextView
                 android:id="@+id/tvLabel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="First Floor"
                 android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tvLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="5sp"
+                android:text="link"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
