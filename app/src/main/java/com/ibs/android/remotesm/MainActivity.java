@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,16 +31,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+
 
     public static String EXTRA_LINK="linked";
     private RecyclerView mRecyclerView;
     private IBSAdapter mIbsAdapter;
     private ArrayList<Item> itemList;
     private RequestQueue mRequestQueue;
+    String title="RemoteSM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
 
         mRequestQueue= Volley.newRequestQueue(this);
         pareJSON();
+
+        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //setTitle(title);
     }
 
     private void pareJSON()
@@ -70,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            title=response.getString("title");
+                            setTitle(title);
                             JSONArray jsonArray= response.getJSONArray("widgets");
 
                             for (int i=0;i<jsonArray.length();i++)
@@ -109,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();;
+                    error.printStackTrace();
             }
         });
 
@@ -133,5 +145,20 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
             return  true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id==R.id.nav_about)
+        {
+
+        }
+        else if (id==R.id.nav_setting)
+        {
+            Intent i= new Intent(this,settingActivity.class);
+            startActivity(i);
+        }
+        return false;
     }
 }

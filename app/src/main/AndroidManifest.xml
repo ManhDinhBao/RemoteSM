@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".SubActivity" />
-        <activity android:name=".ChildSubActivity"></activity>
+        <activity android:name=".ChildSubActivity" />
+        <activity android:name=".settingActivity" />
+        <activity android:name=".LocalActivity" />
+        <activity android:name=".DialogActivity"></activity>
     </application>
 
 </manifest>

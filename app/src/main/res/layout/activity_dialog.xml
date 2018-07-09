@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DialogActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtDlgTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editDlgValue"
+        android:hint="Input value"
+        android:textSize="14sp"
+        android:padding="15dp"
+        android:layout_margin="5dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="OK"
+            android:layout_alignParentRight="true"
+            android:background="#FFFF"
+            android:layout_marginLeft="2dp"/>
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_toLeftOf="@+id/btnOK"
+            android:background="#FFFF"
+            android:layout_marginRight="2dp"
+            >
+
+        </Button>
+    </RelativeLayout>
+
+
+</LinearLayout>

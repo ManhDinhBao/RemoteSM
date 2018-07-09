@@ -59,6 +59,9 @@ public class SubActivity extends AppCompatActivity implements IBSAdapter.OnItemC
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            String title="RemoteSM";
+                            title=response.getString("title");
+                            setTitle(title);
                             JSONArray jsonArray = response.getJSONArray("widgets");
 
                             for (int i = 0; i < jsonArray.length(); i++) {
