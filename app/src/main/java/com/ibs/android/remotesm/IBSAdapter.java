@@ -15,6 +15,15 @@ import java.util.ArrayList;
 public class IBSAdapter extends RecyclerView.Adapter<IBSAdapter.IBSViewHolder> {
     private Context mContext;
     private ArrayList<Item> mItemList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public IBSAdapter(Context context,ArrayList<Item> itemList)
     {
@@ -58,6 +67,18 @@ public class IBSAdapter extends RecyclerView.Adapter<IBSAdapter.IBSViewHolder> {
             mImageView=itemView.findViewById(R.id.imgIcon);
             mTextView=itemView.findViewById(R.id.tvLabel);
             mTextViewLink=itemView.findViewById(R.id.tvLink);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 

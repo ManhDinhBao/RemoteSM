@@ -1,6 +1,5 @@
 package com.ibs.android.remotesm;
 
-import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,21 +20,23 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItemClickListener{
+import static com.ibs.android.remotesm.MainActivity.EXTRA_LINK;
 
-    public static String EXTRA_LINK="linked";
+public class SubActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private IBSAdapter mIbsAdapter;
     private ArrayList<Item> itemList;
     private RequestQueue mRequestQueue;
-
-
+    String URL="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sub);
 
-        mRecyclerView=(RecyclerView)findViewById(R.id.rvView);
+        Intent intent=getIntent();
+        URL=intent.getStringExtra(EXTRA_LINK);
+
+        mRecyclerView=(RecyclerView)findViewById(R.id.rvViewSub);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
 
     private void pareJSON()
     {
-        String URL="https://demo.openhab.org:8443/rest/sitemaps/demo/demo";
+        //String URL="https://demo.openhab.org:8443/rest/sitemaps/demo/0000";
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -57,28 +58,18 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
 
                             for (int i=0;i<jsonArray.length();i++)
                             {
-                                JSONObject objOutWidget=jsonArray.getJSONObject(i);
-                                JSONArray jsonArrayWidgets = new JSONArray(objOutWidget.getString("widgets"));
-
-                                for(int j=0;j<jsonArrayWidgets.length();j++) {
-
-                                    JSONObject objInWidget=jsonArrayWidgets.getJSONObject(j);
-                                    String linked = "null";
-                                    String label=objInWidget.getString("label");
-                                    if(jsonArrayWidgets.getJSONObject(j).isNull("linkedPage")==false) {
-                                        JSONObject objItem = jsonArrayWidgets.getJSONObject(j).getJSONObject("linkedPage");
-                                        linked=objItem.getString("link");
-                                    }
-
+                                JSONObject objWidget=jsonArray.getJSONObject(i);
+                                JSONObject objItem=objWidget.getJSONObject("item");
+                                    String label=objWidget.getString("label");
                                     String icon = "https://demo.openhab.org:8443/icon/firstfloor?state=null&format=PNG";
+                                    String linked=objItem.getString("link");
                                     itemList.add(new Item(label, icon,linked));
                                     Log.d("link",linked);
-                                }
+
                             }
 
-                            mIbsAdapter=new IBSAdapter(MainActivity.this,itemList);
+                            mIbsAdapter=new IBSAdapter(SubActivity.this,itemList);
                             mRecyclerView.setAdapter(mIbsAdapter);
-                            mIbsAdapter.setOnItemClickListener(MainActivity.this);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -86,20 +77,11 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();;
+                error.printStackTrace();;
             }
         });
 
         mRequestQueue.add(request);
 
-    }
-
-
-    @Override
-    public void onItemClick(int position) {
-        Intent sub=new Intent(this,SubActivity.class);
-        Item clickedItem=itemList.get(position);
-        sub.putExtra(EXTRA_LINK,clickedItem.getLink());
-        startActivity(sub);
     }
 }
