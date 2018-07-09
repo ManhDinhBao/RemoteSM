@@ -1,12 +1,19 @@
 package com.ibs.android.remotesm;
 
+import android.app.ActionBar;
 import android.app.VoiceInteractor;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Switch;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,17 +30,27 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItemClickListener{
 
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
+
     public static String EXTRA_LINK="linked";
     private RecyclerView mRecyclerView;
     private IBSAdapter mIbsAdapter;
     private ArrayList<Item> itemList;
     private RequestQueue mRequestQueue;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
+        toggle= new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRecyclerView=(RecyclerView)findViewById(R.id.rvView);
         mRecyclerView.setHasFixedSize(true);
@@ -69,9 +86,15 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
                                         JSONObject objItem = jsonArrayWidgets.getJSONObject(j).getJSONObject("linkedPage");
                                         linked=objItem.getString("link");
                                     }
+                                    String type=objInWidget.getString("type");
+                                    String state="";
+                                    if(jsonArrayWidgets.getJSONObject(j).isNull("state")==false) {
+                                        state=objInWidget.getString("state");
+                                    }
 
-                                    String icon = "https://demo.openhab.org:8443/icon/firstfloor?state=null&format=PNG";
-                                    itemList.add(new Item(label, icon,linked));
+                                    String icon=objInWidget.getString("icon");
+                                    String iconURL = "https://demo.openhab.org:8443/icon/"+icon+"?state=null&format=PNG";
+                                    itemList.add(new Item(label, iconURL,linked,type,state));
                                     Log.d("link",linked);
                                 }
                             }
@@ -101,5 +124,14 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
         Item clickedItem=itemList.get(position);
         sub.putExtra(EXTRA_LINK,clickedItem.getLink());
         startActivity(sub);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(toggle.onOptionsItemSelected(item))
+        {
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

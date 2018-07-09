@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RemoteSM</string>
+    <string name="about">About</string>
+    <string name="setting">Setting</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
