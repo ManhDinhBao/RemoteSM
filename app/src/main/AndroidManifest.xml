@@ -22,7 +22,8 @@
         <activity android:name=".ChildSubActivity" />
         <activity android:name=".settingActivity" />
         <activity android:name=".LocalActivity" />
-        <activity android:name=".DialogActivity"></activity>
+        <activity android:name=".DialogActivity" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

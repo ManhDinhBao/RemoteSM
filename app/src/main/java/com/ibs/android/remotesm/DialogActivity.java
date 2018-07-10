@@ -2,6 +2,10 @@ package com.ibs.android.remotesm;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class DialogActivity extends AppCompatActivity {
 
@@ -9,5 +13,6 @@ public class DialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog);
+
     }
 }

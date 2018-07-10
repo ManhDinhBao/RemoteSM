@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class settingActivity extends AppCompatActivity {
-
+    public static String EXTRA_SETTING_TYPE="type";
     CardView cardLocal;
     CardView cardRemote;
     @Override
@@ -32,19 +32,23 @@ public class settingActivity extends AppCompatActivity {
         cardLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getApplicationContext(),LocalActivity.class);
-                startActivity(i);
+                CallIntent("local");
             }
         });
 
         cardRemote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getApplicationContext(),LocalActivity.class);
-                startActivity(i);
+               CallIntent("remote");
             }
         });
 
+    }
+    private void CallIntent(String values)
+    {
+        Intent i=new Intent(this,LocalActivity.class);
+        i.putExtra(EXTRA_SETTING_TYPE,values);
+        startActivity(i);
     }
 
 

@@ -152,7 +152,8 @@ public class MainActivity extends AppCompatActivity implements IBSAdapter.OnItem
         int id=item.getItemId();
         if (id==R.id.nav_about)
         {
-
+            Intent i=new Intent(this,AboutActivity.class);
+            startActivity(i);
         }
         else if (id==R.id.nav_setting)
         {
