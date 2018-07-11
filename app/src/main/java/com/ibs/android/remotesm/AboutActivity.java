@@ -57,8 +57,9 @@ public class AboutActivity extends AppCompatActivity {
            RequestQueue requestQueue = Volley.newRequestQueue(this);
            JSONObject jsonBody = new JSONObject();
            jsonBody.put("state","OFF");
-            
-           final String mRequestBody = jsonBody.toString();
+
+           //final String mRequestBody = jsonBody.toString();
+           final String mRequestBody = "ON";
            String puturl="http://demo.openhab.org:8080/rest/items/LivingRoom_Light3/state";
            StringRequest stringRequest = new StringRequest(Request.Method.PUT, puturl, new Response.Listener<String>() {
                @Override
